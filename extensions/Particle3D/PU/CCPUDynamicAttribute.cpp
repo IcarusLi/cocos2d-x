@@ -115,6 +115,12 @@ float PUDynamicAttributeRandom::getMin () const
 void PUDynamicAttributeRandom::setMin (float min)
 {
     _min = min;
+    if (_max!=0 && _max<_min)
+    {
+        auto temp = _max;
+        _max = _min;
+        _min = temp;
+    }
 }
 //-----------------------------------------------------------------------
 float PUDynamicAttributeRandom::getMax () const
@@ -124,13 +130,27 @@ float PUDynamicAttributeRandom::getMax () const
 //-----------------------------------------------------------------------
 void PUDynamicAttributeRandom::setMax (float max)
 {
-    _max = max;
+    _max = max;    
+    if (_min != 0 && _max<_min)
+    {
+        auto temp = _max;
+        _max = _min;
+        _min = temp;
+    }
 }
 //-----------------------------------------------------------------------
 void PUDynamicAttributeRandom::setMinMax (float min, float max)
 {
-    _min = min;
-    _max = max;
+    if (min<max)
+    {
+        _min = min;
+        _max = max;
+    }
+    else
+    {
+        _min = max;
+        _max = min;
+    }
 }
 //-----------------------------------------------------------------------
 float PUDynamicAttributeRandom::getValue (float /*x*/)
